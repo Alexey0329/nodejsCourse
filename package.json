@@ -5,10 +5,13 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --inspect"
+    "start": "nodemon --"
   },
   "author": "AM",
   "license": "MIT",
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  },
   "devDependencies": {
     "nodemon": "^3.0.3"
   }
