@@ -72,7 +72,7 @@ export const carts: CartEntity[] = [{
 {
   id: '167ab747-ffbe-4be2-9a1f-ac9a5ff70c1d',
   userId: '1bc07dd7-23ee-498d-a415-40b4a626d272',
-  isDeleted: true,
+  isDeleted: false,
   items: [],
 }]
 
@@ -85,11 +85,20 @@ export const orderEntities: OrderEntity[] =
       items: [cartItem1],
       payment: {
         type: 'credit',
-        creditCard: '1234-5678-9012-3456',
+        creditCard: {
+          number: '1234-5678-9012-3456',
+          expiration: '12/24',
+          cvv: '123'
+        }
       },
       delivery: {
         type: 'home',
-        address: '123 Main St',
+        address: {
+          street: "123 Main St",
+          city: "Anytown",
+          state: "Anystate",
+          zip: "12345"
+        }
       },
       comments: 'Please deliver after 5pm',
       status: 'created',
@@ -102,11 +111,20 @@ export const orderEntities: OrderEntity[] =
       items: [cartItem2],
       payment: {
         type: 'debit',
-        creditCard: '2345-6789-0123-4567',
+        creditCard: {
+          number: '1234-5678-9012-3456',
+          expiration: '12/24',
+          cvv: '123'
+        }
       },
       delivery: {
         type: 'office',
-        address: '456 Broadway St',
+        address: {
+          street: "123 Main St",
+          city: "Anytown",
+          state: "Anystate",
+          zip: "12345"
+        }
       },
       comments: 'Please deliver before noon',
       status: 'created',
@@ -122,7 +140,12 @@ export const orderEntities: OrderEntity[] =
       },
       delivery: {
         type: 'pickup',
-        address: '789 Park Ave',
+        address: {
+          street: "123 Main St",
+          city: "Anytown",
+          state: "Anystate",
+          zip: "12345"
+        }
       },
       comments: 'I will pick up at 3pm',
       status: 'completed',

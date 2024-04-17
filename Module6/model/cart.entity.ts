@@ -1,5 +1,10 @@
 import { ProductEntity } from "./product.entity";
 
+export type ResponseObject = {
+  data: any;
+  error: any;
+}
+
 export interface CartItemEntity {
   product: ProductEntity;
   count: number;
