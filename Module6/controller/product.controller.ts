@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { getProduct, getProducts } from "../service/product.service";
 import { send500Error, getResponseObject } from '../util';
 
-export const getProductsList = (req: Request, res: Response): void => {
+export const getProductsList = async (req: Request, res: Response): Promise<void> => {
   try {
-    let productsResp = getProducts();
+    let productsResp = await getProducts();
     if (productsResp) {
       res.status(200).send(productsResp);
     } else {
@@ -17,10 +17,10 @@ export const getProductsList = (req: Request, res: Response): void => {
   }
 }
 
-export const getProductById = (req: Request, res: Response): void => {
+export const getProductById = async (req: Request, res: Response): Promise<void> => {
   try {
     const productId: string = req.params.productId;
-    let productResp = getProduct(productId);
+    let productResp = await getProduct(productId);
     if (productResp) {
       res.status(200).send(productResp);
     } else {

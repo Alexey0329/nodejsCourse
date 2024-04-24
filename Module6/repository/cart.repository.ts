@@ -1,66 +1,51 @@
 import { CartEntity } from "../model/cart.entity";
-import { OrderEntity } from "../model/order.entity";
-import { carts, orderEntities } from "../test-data";
+import Cart from "../model/cart.entity";
 
-export const getCartData = (userId: string): CartEntity | null => {
-  return carts.find(cart => cart.userId === userId) || null;
-}
-
-export const saveUserCart = (cart: CartEntity): CartEntity => {
-  const cartIndex = carts.findIndex(c => c.userId === cart.userId);
-  if (cartIndex === -1) {
-    carts.push(cart);
-  } else {
-    carts[cartIndex] = cart;
-  }
+export const getCartData = async (userId: string): Promise<CartEntity | null> => {
+  let cart = null
+  if (userId) {
+    cart = await Cart.findOne({ userId: userId}); // why findById is not working?
+  } 
   return cart;
 }
 
-export const deleteCartData = (userId: string): boolean => {
-  const cartIndex = carts.findIndex(cart => cart.userId === userId);
-  if (cartIndex !== -1) {
-    carts[cartIndex].items = [];
-    carts[cartIndex].isDeleted = true;
-    return true;
+export const updateCart = async (cartEntity: CartEntity): Promise<CartEntity | null> => {
+  let updatedCart;
+  try {
+      updatedCart = await Cart.updateOne({ userId: cartEntity.userId }, cartEntity);
+      console.log("Update result: ", updatedCart);
+    return updatedCart;
+  } catch (err) {
+    console.error("Error saving cart: ", err);
+    return null;
   }
-  return false;
 }
 
-export const createNewOrder = (userId: string): OrderEntity | boolean => {
-  const cartIndex: number = carts.findIndex(cart => cart.userId === userId);
-  const cart: CartEntity = carts[cartIndex];
-  if (!cart || cart.items.length === 0 || cart.isDeleted) {
+export const saveUserCart = async (cartEntity: CartEntity): Promise<CartEntity | null> => {
+  let savedCart;
+  try {
+      savedCart = await cartEntity.save();
+      console.log("Save result: ", savedCart);
+      return savedCart;
+  } catch (err) {
+    console.error("Error saving cart: ", err);
+    return null;
+  }
+}
+
+export const deleteCartData = async (userId: string): Promise<boolean> => {
+  try {
+   const result = await Cart.updateOne(
+      { userId: userId },
+      { isDeleted: true }
+    );
+    console.log("Delete result: ", result);
+    return true;
+  } catch (err) {
+    console.error("Error deleting user: ", err);
     return false;
   }
-  const order: OrderEntity = {
-    id: 'order-' + carts.length + 1,
-    userId: cart.userId,
-    cartId: cart.id,
-    items: cart.items,
-    payment: {
-      type: 'creditCard',
-      creditCard: {
-        number: '1234-5678-1234-5678',
-        expiration: '12/24',
-        cvv: '123'
-      }
-    },
-    delivery: {
-      type: 'home',
-      address: {
-        street: 'home street',
-        city: 'Springfield',
-        state: 'IL',
-        zip: '54321'
-      }
-    },
-    comments: 'Please deliver before 5pm',
-    status: 'created',
-    total: cart.items.reduce((total, item) => total + item.count * item.product.price, 0)
-  }
-  carts[cartIndex].isDeleted = true;
-  orderEntities.push(order);
-  return order;
 }
+
 
 

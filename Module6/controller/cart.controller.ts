@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import { checkoutCart, deleteCart, getCartResponce, updateCart } from "../service/cart.service";
+import { deleteCart, getCartResponce, updateCart } from "../service/cart.service";
 import { ResponseObject } from '../model/cart.entity';
 import { getUserId, send500Error, getResponseObject } from '../util';
 import { CartUpdateValidator } from '../validator/cart.validator';
+import { checkoutCart } from '../service/order.service';
 
-
-export const getUserCart = (req: Request, res: Response): void => {
+export const getUserCart = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = getUserId(req, res);
-    const cartResp = getCartResponce(userId);
+    const cartResp = await getCartResponce(userId);
     if (cartResp) {
       res.status(200).send(cartResp);
     } else {
@@ -29,7 +29,7 @@ export const updateUserCart = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    const updateResp: ResponseObject = updateCart(userId, req.body);
+    const updateResp: ResponseObject = await updateCart(userId, req.body);
     if (updateResp) {
       res.status(200).send(updateResp);
     } else {
@@ -40,10 +40,10 @@ export const updateUserCart = async (req: Request, res: Response): Promise<void>
   }
 }
 
-export const deleteUserCart = (req: Request, res: Response) => {
+export const deleteUserCart = async (req: Request, res: Response) => {
   try {
     const userId = getUserId(req, res);
-    const deleteResp = deleteCart(userId);
+    const deleteResp = await deleteCart(userId);
     if (deleteResp) {
       res.status(200).send(deleteResp);
     } else {
@@ -54,10 +54,10 @@ export const deleteUserCart = (req: Request, res: Response) => {
   }
 }
 
-export const checkoutUserCart = (req: Request, res: Response): void => {
+export const checkoutUserCart = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = getUserId(req, res);
-    const checkoutResp = checkoutCart(userId);
+    const checkoutResp = await checkoutCart(userId);
     if (checkoutResp) {
       res.status(200).send(checkoutResp);
     } else {
@@ -66,6 +66,7 @@ export const checkoutUserCart = (req: Request, res: Response): void => {
       }));
     }
   } catch (error) {
+    console.log(error);
     send500Error(res);
   }
 }

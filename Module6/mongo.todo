@@ -1,0 +1,6 @@
+fix for DNS issue in podman wsl
+
+wsl -d podman-machine-default
+cd /mnt/wsl/
+sudo chmod 777 resolv.conf
+sudo printf "nameserver 8.8.8.8\n" >> resolv.conf
