@@ -5,15 +5,15 @@ import { UserEntity } from "./model/user.entity"
 
 export const usersList: UserEntity[] = [{
   "id": "81a04664-d3b4-4abd-ac44-20b4c0105af2",
-  'role': 'admin',
-  'email': 'admin@mail.com',
-  'password': 'admin'
+  "role": "admin",
+  "email": "admin@mail.com",
+  "password": "admin"
 },
 {
   "id": "1bc07dd7-23ee-498d-a415-40b4a626d272",
   "role": "user",
-  'email': 'user@mail.com',
-  'password': 'user'
+  "email": "user@mail.com",
+  "password": "user"
 }]
 
 export const productsData = [{
@@ -64,91 +64,68 @@ const cartItem2: CartItemEntity = {
 }
 
 export const carts: CartEntity[] = [{
-  id: '1434fec6-cd85-420d-95c0-eee2301a971d',
-  userId: '81a04664-d3b4-4abd-ac44-20b4c0105af2',
+  id: "1434fec6-cd85-420d-95c0-eee2301a971d",
+  userId: "81a04664-d3b4-4abd-ac44-20b4c0105af2",
   isDeleted: false,
   items: [cartItem1],
 },
 {
-  id: '167ab747-ffbe-4be2-9a1f-ac9a5ff70c1d',
-  userId: '1bc07dd7-23ee-498d-a415-40b4a626d272',
-  isDeleted: false,
+  id: "167ab747-ffbe-4be2-9a1f-ac9a5ff70c1d",
+  userId: "1bc07dd7-23ee-498d-a415-40b4a626d272",
+  isDeleted: true,
   items: [],
 }]
 
 export const orderEntities: OrderEntity[] =
   [
     {
-      id: 'order1',
-      userId: '81a04664-d3b4-4abd-ac44-20b4c0105af2',
-      cartId: '1434fec6-cd85-420d-95c0-eee2301a971d',
+      id: "order1",
+      userId: "81a04664-d3b4-4abd-ac44-20b4c0105af2",
+      cartId: "1434fec6-cd85-420d-95c0-eee2301a971d",
       items: [cartItem1],
       payment: {
-        type: 'credit',
-        creditCard: {
-          number: '1234-5678-9012-3456',
-          expiration: '12/24',
-          cvv: '123'
-        }
+        type: "credit",
+        creditCard: "1234-5678-9012-3456",
       },
       delivery: {
-        type: 'home',
-        address: {
-          street: "123 Main St",
-          city: "Anytown",
-          state: "Anystate",
-          zip: "12345"
-        }
+        type: "home",
+        address: "123 Main St",
       },
-      comments: 'Please deliver after 5pm',
-      status: 'created',
+      comments: "Please deliver after 5pm",
+      status: "created",
       total: 400,
     },
     {
-      id: 'order2',
-      userId: '1bc07dd7-23ee-498d-a415-40b4a626d272',
-      cartId: '167ab747-ffbe-4be2-9a1f-ac9a5ff70c1d',
+      id: "order2",
+      userId: "1bc07dd7-23ee-498d-a415-40b4a626d272",
+      cartId: "167ab747-ffbe-4be2-9a1f-ac9a5ff70c1d",
       items: [cartItem2],
       payment: {
-        type: 'debit',
-        creditCard: {
-          number: '1234-5678-9012-3456',
-          expiration: '12/24',
-          cvv: '123'
-        }
+        type: "debit",
+        creditCard: "2345-6789-0123-4567",
       },
       delivery: {
-        type: 'office',
-        address: {
-          street: "123 Main St",
-          city: "Anytown",
-          state: "Anystate",
-          zip: "12345"
-        }
+        type: "office",
+        address: "456 Broadway St",
       },
-      comments: 'Please deliver before noon',
-      status: 'created',
+      comments: "Please deliver before noon",
+      status: "created",
       total: 20,
     },
     {
-      id: 'order3',
-      userId: '81a04664-d3b4-4abd-ac44-20b4c0105af2',
-      cartId: '1434fec6-cd85-420d-95c0-eee2301a971d',
+      id: "order3",
+      userId: "81a04664-d3b4-4abd-ac44-20b4c0105af2",
+      cartId: "1434fec6-cd85-420d-95c0-eee2301a971d",
       items: [cartItem1, cartItem2],
       payment: {
-        type: 'cash',
+        type: "cash",
       },
       delivery: {
-        type: 'pickup',
-        address: {
-          street: "123 Main St",
-          city: "Anytown",
-          state: "Anystate",
-          zip: "12345"
-        }
+        type: "pickup",
+        address: "789 Park Ave",
       },
-      comments: 'I will pick up at 3pm',
-      status: 'completed',
+      comments: "I will pick up at 3pm",
+      status: "completed",
       total: 420,
     },
   ]

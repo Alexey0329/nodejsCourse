@@ -1,10 +1,18 @@
-import { ProductEntity } from "../model/product.entity";
-import { productsData } from "../test-data"
+import Product, { ProductEntity } from "../model/product.entity";
 
-export const getProductsData = (): ProductEntity[] => {
-  return productsData;
+export const getProductsData = async (): Promise<ProductEntity[]> => {
+  try {
+    const products = await Product.find();
+    return products;
+  } catch (error) {
+    throw new Error("Failed to fetch products data.");
+  }
 }
 
-export const getProductById = (id: string): ProductEntity | null => {
-  return getProductsData().find(product => product.id === id) || null;
+export const getProductById = async (id: string): Promise<ProductEntity | null> => {
+  let product = null
+  if (id) {
+    product = await Product.findOne({ _id: id});
+  } 
+  return product;
 }
